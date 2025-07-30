@@ -1,0 +1,85 @@
+* {
+  margin: 0;
+  padding: 0;
+  color: black;
+  box-sizing: border-box;
+}
+
+input,
+textarea {
+  cursor: text;
+  resize: none;
+}
+
+input:focus,
+button:focus,
+select:focus {
+  outline: none;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.grow {
+  transition: transform 0.2s ease;
+}
+
+.grow:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px lightskyblue;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.fade {
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* EXTERNAL CODE BELOW */
+.loader-container {
+  background-image: url('./assets/gradient.jpeg');
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 92vh;
+}
+
+.loading-text {
+  font-size: 48px;
+  font-weight: bold;
+}
+
+.dots::after {
+  content: '';
+  text-align: left;
+  animation: dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes dots {
+  0% {
+    content: ''
+  }
+  25% {
+    content: '.'
+  }
+  50% {
+    content: '..'
+  }
+  75% {
+    content: '...'
+  }
+}

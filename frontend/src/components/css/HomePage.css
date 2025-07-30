@@ -1,0 +1,48 @@
+#home-page {
+  width: 100vw;
+  min-height: 100vh;
+  text-align: center;
+  background-image: url('./../../assets/gradient.jpeg');
+}
+
+#home-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1vh 10vw;
+  gap: calc(min(40px, 3vh))
+}
+
+#home-loading-screen {
+  position: relative;
+  width: 100vw;
+  height: 92vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+#welcome-text {
+  position: absolute;
+  white-space: nowrap;
+  animation: fadeIn 2.5s ease-in-out, slide-welcome 25s linear infinite;
+}
+
+@keyframes slide-welcome {
+  0% {
+    left: 0%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes slide-listings {
+  from {
+    left: calc(-1 * var(--listing-width))
+  }
+  to {
+    left: 100%;
+  }
+}

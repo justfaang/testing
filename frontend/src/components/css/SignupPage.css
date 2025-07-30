@@ -1,0 +1,91 @@
+#signup-page {
+  width: 100vw;
+}
+
+#signup-page-header {
+  height: 8vh;
+  display: flex;
+  align-items: center;
+  gap: 1vw;
+  padding: .5vh .5vw .5vh 1vw;
+  border-bottom: 3px solid black;
+  background-image: url('./../../assets/gradient.jpeg');
+}
+
+#signup-page-header-image {
+  height: 80%;
+}
+
+#signup-page-overlay {
+  height: 92vh;
+  text-align: center;
+  overflow-y: auto;
+  background-image: url('./../../assets/gradient.jpeg');
+}
+
+#signup-page-content {
+  padding: 50px;
+  position: fixed;
+  top: 54%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+  width: fit-content;
+  width: 20vw;
+  min-width: 300px;
+  min-height: 200px;
+  border-radius: 25px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.signup-info {
+  padding-left: 1vw;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.signup-info-textbox {
+  position: relative;
+  background-color: inherit;
+  border: none;
+  color: black;
+  width: 100%;
+  font-size: 18px;
+  background-color: transparent;
+}
+
+.signup-info-textbox::placeholder {
+  color: lightgray;
+  font-size: 12px;
+}
+
+.signup-auth-button {
+  color: black;
+  background-color: inherit;
+}
+
+.signup-auth-button:hover {
+  border: 1px solid;
+}
+
+#signup-button {
+  width: 75%;
+  margin-top: 10px;
+}
+
+#signup-account-creation {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 25px;
+}

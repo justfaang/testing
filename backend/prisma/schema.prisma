@@ -1,0 +1,137 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                           Int                @id @default(autoincrement())
+  name                         String
+  username                     String             @unique
+  phoneNumber                  String
+  zip                          String
+  latitude                     Float
+  longitude                    Float
+  email                        String             @unique
+  password                     String
+
+  ownedListings                Listing[]          @relation("owner")
+  favoritedListings            Listing[]          @relation("favoriter")
+  listingVisits                ListingVisit[]
+  savedSearchFilters           SearchFilter[]     @relation("saver")
+  viewedSearchFilters          SearchFilter[]     @relation("viewer")
+  sentMessages                 Message[]          @relation("sentMessages")
+  receivedMessages             Message[]          @relation("receivedMessages")
+}
+        
+model Make {
+  id                           Int                @id @default(autoincrement())
+  name                         String             @unique
+  models                       Model[]
+}
+        
+model Model {
+  id                           Int                @id @default(autoincrement())
+  name                         String
+  make                         Make               @relation(fields: [makeName], references: [name], onDelete: Cascade)
+  makeName                     String
+}
+
+model Listing {
+  id                           Int                 @id @default(autoincrement())
+  vin                          String              @unique
+  condition                    String
+  make                         String
+  model                        String
+  year                         Int
+  color                        String
+  mileage                      Int
+  description                  String
+  images                       String[]
+  price                        Int
+  zip                          String
+  latitude                     Float
+  longitude                    Float
+  city                         String
+  state                        String
+  ownerName                    String              @map("owner_name")
+  ownerNumber                  String              @map("owner_number")
+  sold                         Boolean             @default(false)
+  createdAt                    DateTime            @default(now())
+  soldAt                       DateTime?
+  owner                        User?               @relation("owner", fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId                      Int?
+  favorites                    Int                 @default(0)
+
+  favoriters                   User[]              @relation("favoriter")
+  visits                       ListingVisit[]
+  messages                     Message[]
+}
+
+model ListingVisit {
+  id                           Int                 @id @default(autoincrement())
+  user                         User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId                       Int
+  listing                      Listing             @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  listingId                    Int
+  firstVisitAt                 DateTime            @default(now())
+  recentVisitAt                DateTime            @default(now())
+  dwellTime                    Int                 @default(0)
+  clickCount                   Int                 @default(0)
+
+  @@unique([userId, listingId])
+}
+
+model SearchFilter {
+  id                           Int                 @id @default(autoincrement())
+  saver                        User?               @relation("saver", fields: [saverId], references: [id], onDelete: Cascade)
+  saverId                      Int?
+  viewer                       User?               @relation("viewer", fields: [viewerId], references: [id], onDelete: Cascade)
+  viewerId                     Int?
+  condition                    String
+  make                         String
+  model                        String
+  distance                     Int
+  zip                          String
+  color                        String?
+  minYear                      Int?
+  maxYear                      Int?
+  maxMileage                   Int?
+  minPrice                     Int?
+  maxPrice                     Int?
+  createdAt                    DateTime            @default(now())
+}
+
+model Message {
+  id                           Int                 @id @default(autoincrement())
+  sender                       User                @relation("sentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  senderId                     Int
+  
+  receiver                     User                @relation("receivedMessages", fields: [receiverId], references: [id], onDelete: Cascade)
+  receiverId                   Int
+
+  content                      String
+  createdAt                    DateTime            @default(now())
+
+  listing                      Listing             @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  listingId                    Int
+}
+
+model CompetitorGraph {
+  id                           Int                 @id @default(autoincrement())
+  make                         String
+  model                        String
+  competitorMake               String
+  competitorModel              String
+  count                        Int
+  @@unique([make, model, competitorMake, competitorModel])
+}
